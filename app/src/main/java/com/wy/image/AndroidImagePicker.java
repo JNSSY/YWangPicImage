@@ -199,7 +199,7 @@ public class AndroidImagePicker {
     private List<ImageSet> mImageSets;
     private int mCurrentSelectedImageSetPosition = 0;//Item 0: all images
 
-    Set<ImageItem> mSelectedImages = new LinkedHashSet<>();
+     Set<ImageItem> mSelectedImages = new LinkedHashSet<>();
 
     public List<ImageSet> getImageSets() {
         return mImageSets;
@@ -241,7 +241,6 @@ public class AndroidImagePicker {
 
     public void deleteSelectedImageItem(int position, ImageItem item) {
         mSelectedImages.remove(item);
-        Log.i(TAG, "=====deleteSelectedImageItem:" + item.path);
         notifyImageSelectedChanged(position, item, false);
     }
 

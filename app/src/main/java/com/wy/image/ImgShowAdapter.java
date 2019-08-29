@@ -3,6 +3,7 @@ package com.wy.image;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,26 +25,32 @@ public class ImgShowAdapter extends RecyclerView.Adapter<ImgShowAdapter.MyViewHo
     private ImgLoader mImagePresenter;
 
     private OnItemClickListener listener;
+    private OnLongClickListener longClickListener;
 
     public ImgShowAdapter() {
         mImagePresenter = new PicassoImgLoader();
-        datas=new ArrayList<>();
+        datas = new ArrayList<>();
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener=listener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        this.longClickListener = onLongClickListener;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view=LayoutInflater.from(parent.getContext()).inflate(R.layout.img_item, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.img_item, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
-        if (position < bitmap_list.size()) {
-            mImagePresenter.onPresentImage(viewHolder.iv_item, list.get(position).getPath(), 365);
+        if (position < datas.size()) {
+//            mImagePresenter.onPresentImage(viewHolder.iv_item, list.get(position).getPath(), 365);
+            mImagePresenter.onPresentImage(viewHolder.iv_item, datas.get(position).getFile().getPath(), 365);
 //            viewHolder.iv_item.setImageBitmap(bitmap_list.get(position));
             viewHolder.iv_item.setContentDescription(null);
         } else {
@@ -66,9 +73,15 @@ public class ImgShowAdapter extends RecyclerView.Adapter<ImgShowAdapter.MyViewHo
     public void addData(List<ImageItem> list) {
         if (list != null && list.size() > 0) {
             datas.addAll(list);
-            changeToBitmap();
+//            changeToBitmap();
         }
     }
+
+    public void deleteData(int position) {
+        datas.remove(position);
+        notifyDataSetChanged();
+    }
+
 
     public void clearData() {
         datas.clear();
@@ -100,7 +113,15 @@ public class ImgShowAdapter extends RecyclerView.Adapter<ImgShowAdapter.MyViewHo
             iv_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onClick(v,getPosition());
+                    listener.onClick(v, getPosition());
+                }
+            });
+
+            iv_item.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    longClickListener.onLongClick(v, getPosition());
+                    return false;
                 }
             });
         }
