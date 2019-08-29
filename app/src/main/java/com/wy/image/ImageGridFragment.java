@@ -17,7 +17,7 @@ public class ImageGridFragment extends Fragment implements OnImagesLoadedListene
     private GridView mGridView;
     private ImageGridAdapter mAdapter;
     private Context context;
-    private  AndroidImagePicker androidImagePicker;
+    private AndroidImagePicker androidImagePicker;
     private int imageGridSize;
 
     @Override
@@ -34,16 +34,15 @@ public class ImageGridFragment extends Fragment implements OnImagesLoadedListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        androidImagePicker=AndroidImagePicker.getInstance();
+        androidImagePicker = AndroidImagePicker.getInstance();
         imageGridSize = (getActivity().getWindowManager().getDefaultDisplay().getWidth() - Util.dp2px(getActivity(), 2) * 2) / 3;
     }
-
 
 
     @Override
     public void onImagesLoaded(List<ImageSet> imageSetList) {
 
-        mAdapter = new ImageGridAdapter(context, imageSetList.get(0).imageItems,this,imageGridSize);
+        mAdapter = new ImageGridAdapter(context, imageSetList.get(0).imageItems, this, imageGridSize);
         mGridView.setAdapter(mAdapter);
     }
 }

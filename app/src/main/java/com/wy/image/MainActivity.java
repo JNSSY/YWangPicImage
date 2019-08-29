@@ -1,15 +1,20 @@
 package com.wy.image;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener {
@@ -80,7 +85,10 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
                 }
             });
         } else {
-            Toast.makeText(this, "查看大图", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ImagePreviewActivity.class);
+            intent.putExtra("position", position);
+            intent.putExtra("data", (Serializable) imagePicker.getSelectedImages());
+            startActivity(intent);
         }
     }
 }

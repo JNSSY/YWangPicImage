@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".ImageGridActivity" />
         <activity android:name=".BaseActivity" />
+        <activity android:name=".ImagePreviewActivity" />
     </application>
 
 </manifest>
