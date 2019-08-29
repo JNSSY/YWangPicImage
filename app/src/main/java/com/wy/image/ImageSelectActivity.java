@@ -1,13 +1,11 @@
 package com.wy.image;
 
 import android.Manifest;
-import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,35 +13,42 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements OnItemClickListener, View.OnDragListener {
+public class ImageSelectActivity extends BaseActivity implements OnItemClickListener, View.OnDragListener, View.OnClickListener {
 
     private RecyclerView rv;
     private ImgShowAdapter imgShowAdapter;
     private AndroidImagePicker imagePicker;
     private TextView tv_delete;
     private int index = -1;
+    private TextView tv_submit;
+    private LubanUtils lubanUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_image_select);
 
         imagePicker = AndroidImagePicker.getInstance();
+        lubanUtils = new LubanUtils(this);
         rv = findViewById(R.id.rv);
+        tv_submit = findViewById(R.id.tv_submit);
         tv_delete = findViewById(R.id.tv_delete);
+
+        tv_submit.setOnClickListener(this);
         tv_delete.setOnDragListener(this);
 
         checkPerm();
 
         initAdapter();
+
 
     }
 
@@ -98,7 +103,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, V
     public void onClick(View view, int position) {
         CharSequence description = view.findViewById(R.id.iv_item).getContentDescription();
         if (description != null && "add".equals(description.toString())) {
-            imagePicker.pickMulti(MainActivity.this, false, new AndroidImagePicker.OnImagePickCompleteListener() {
+            imagePicker.pickMulti(ImageSelectActivity.this, false, new AndroidImagePicker.OnImagePickCompleteListener() {
                 @Override
                 public void onImagePickComplete(List<ImageItem> items) {
                     if (items != null && items.size() > 0) {
@@ -143,5 +148,32 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, V
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        compressFiles();
+
+        lubanUtils.getCompressedFiles(new LubanInterface() {
+            @Override
+            public void getFiles(List<File> files) {
+                for (File file : files) {
+                    Log.e("wy", file.length() / 1024 + " KB");
+                }
+            }
+        });
+
+    }
+
+    private void compressFiles() {
+        List<ImageItem> selectedImages = imagePicker.getSelectedImages();
+        List<File> files = new ArrayList<>();
+        for (ImageItem imageItem : selectedImages) {
+            files.add(imageItem.getFile());
+        }
+        if (selectedImages.size() > 0) {
+            lubanUtils.compressImage(this, files);
+        }
     }
 }
