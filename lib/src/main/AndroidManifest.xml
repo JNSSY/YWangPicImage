@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wy.lib">
+
+    <application>
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".ImageGridActivity" />
+        <activity android:name=".ImagePreviewActivity" />
+    </application>
+</manifest>

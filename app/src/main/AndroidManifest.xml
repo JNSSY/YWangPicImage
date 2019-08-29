@@ -14,16 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ImageSelectActivity">
+        <activity android:name="com.wy.lib.ImageSelectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImageGridActivity" />
-        <activity android:name=".BaseActivity" />
-        <activity android:name=".ImagePreviewActivity" />
     </application>
 
 </manifest>
