@@ -128,6 +128,7 @@ public class ImageSelectActivity extends BaseActivity implements OnItemClickList
         switch (event.getAction()) {
             case DragEvent.ACTION_DRAG_STARTED: //开始拖动
                 tv_delete.setText("拖动到此处删除");
+                tv_delete.setBackgroundColor(getResources().getColor(R.color.red));
                 break;
             case DragEvent.ACTION_DRAG_EXITED://拖动的View从TextView上移除
                 tv_delete.setText("拖动到此处删除");
@@ -158,9 +159,10 @@ public class ImageSelectActivity extends BaseActivity implements OnItemClickList
         lubanUtils.getCompressedFiles(new LubanInterface() {
             @Override
             public void getFiles(List<File> files) {
-                for (File file : files) {
-                    Log.e("wy", file.length() / 1024 + " KB");
-                }
+//                for (File file : files) {
+//                    Log.e("wy", file.length() / 1024 + " KB");
+//                }
+                List<String> base64List = lubanUtils.getImageBase64List(files);
             }
         });
 
