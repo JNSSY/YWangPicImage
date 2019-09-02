@@ -95,6 +95,7 @@ public class ImageSelectActivity extends BaseActivity implements OnItemClickList
     @Override
     protected void onDestroy() {
         imagePicker.clearSelectedImages();
+        FileUtils.clearLocalPhoto(this);
         super.onDestroy();
     }
 
@@ -177,4 +178,5 @@ public class ImageSelectActivity extends BaseActivity implements OnItemClickList
             Toast.makeText(this, "请先选择图片", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

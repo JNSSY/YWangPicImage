@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -26,14 +27,15 @@ public class LubanUtils {
     private ProgressDialog pDialog;
     private Context context;
     private List<File> fileList;
+    private List<String> b64List;
     private int count = 1;
 
     public LubanUtils(Context context) {
         this.context = context;
-        File file_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "hxx");
-        if (!file_dir.exists()) {
-            file_dir.mkdir();
-        }
+//        File file_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "hxx");
+//        if (!file_dir.exists()) {
+//            file_dir.mkdir();
+//        }
 
         if (pDialog == null) {
             pDialog = new ProgressDialog(context);
@@ -41,6 +43,7 @@ public class LubanUtils {
         }
 
         fileList = new ArrayList<>();
+        b64List = new ArrayList<>();
     }
 
     private LubanInterface lubanInterface;
@@ -54,7 +57,7 @@ public class LubanUtils {
         Luban.with(activity)
                 .load(files)
                 .ignoreBy(10)
-                .setTargetDir(activity.getExternalCacheDir()+File.separator)
+                .setTargetDir(activity.getExternalCacheDir() + File.separator)
                 .setFocusAlpha(false)
                 .filter(new CompressionPredicate() {
                     @Override
@@ -99,14 +102,18 @@ public class LubanUtils {
                 }).launch();
     }
 
-    public String getImageBase64(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] bytes = baos.toByteArray();
-        String string = android.util.Base64.encodeToString(bytes, android.util.Base64.DEFAULT);
-        string = string.replaceAll("\n", "");
-        string = string.replaceAll("\r", "");
-        return string;
+    public List<String> getImageBase64List(List<File> fileList) {
+        for (File file : fileList) {
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] bytes = baos.toByteArray();
+            String string = android.util.Base64.encodeToString(bytes, android.util.Base64.DEFAULT);
+            string = string.replaceAll("\n", "");
+            string = string.replaceAll("\r", "");
+            b64List.add(string);
+        }
+        return b64List;
     }
 
     private void showProgress() {
