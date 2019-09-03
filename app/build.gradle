@@ -9,11 +9,11 @@ android {
 //            keyPassword 'android'
 //        }
 //    }
-    compileSdkVersion 28
+    compileSdkVersion 26
     defaultConfig {
         applicationId "com.wy.image"
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion 17
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 //        signingConfig signingConfigs.wy
