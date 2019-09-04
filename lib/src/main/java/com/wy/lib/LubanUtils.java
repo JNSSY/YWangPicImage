@@ -102,6 +102,7 @@ public class LubanUtils {
 
     public List<String> getImageBase64List(List<File> fileList) {
         List<String> b64List = new ArrayList<>();
+        b64List.clear();
         for (File file : fileList) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
