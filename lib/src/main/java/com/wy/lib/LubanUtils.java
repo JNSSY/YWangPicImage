@@ -27,7 +27,6 @@ public class LubanUtils {
     private ProgressDialog pDialog;
     private Context context;
     private List<File> fileList;
-    private List<String> b64List;
     private int count = 1;
 
     public LubanUtils(Context context) {
@@ -43,7 +42,6 @@ public class LubanUtils {
         }
 
         fileList = new ArrayList<>();
-        b64List = new ArrayList<>();
     }
 
     private LubanInterface lubanInterface;
@@ -103,6 +101,7 @@ public class LubanUtils {
     }
 
     public List<String> getImageBase64List(List<File> fileList) {
+        List<String> b64List = new ArrayList<>();
         for (File file : fileList) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
