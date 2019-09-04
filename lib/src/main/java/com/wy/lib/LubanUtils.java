@@ -84,6 +84,7 @@ public class LubanUtils {
 
                     @Override
                     public void onSuccess(File file) {
+                        fileList.clear();
                         fileList.add(file);
                         if (count++ == files.size()) {
                             lubanInterface.getFiles(fileList);
