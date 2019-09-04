@@ -163,6 +163,7 @@ public class ImageSelectActivity extends BaseActivity implements OnItemClickList
 //                    Log.e("wy", file.length() / 1024 + " KB");
 //                }
                 List<String> base64List = lubanUtils.getImageBase64List(files);
+                Log.e("wy", "b64 " + base64List.size());
             }
         });
 

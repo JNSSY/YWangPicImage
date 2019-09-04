@@ -52,6 +52,7 @@ public class LubanUtils {
 
     public void compressImage(Activity activity, final List<File> files) {
         count = 1;
+        fileList.clear();
         Luban.with(activity)
                 .load(files)
                 .ignoreBy(10)
@@ -84,7 +85,6 @@ public class LubanUtils {
 
                     @Override
                     public void onSuccess(File file) {
-                        fileList.clear();
                         fileList.add(file);
                         if (count++ == files.size()) {
                             lubanInterface.getFiles(fileList);
