@@ -156,7 +156,7 @@ public class ImageSelectActivity extends BaseActivity implements OnItemClickList
 
         compressFiles();
 
-        lubanUtils.getCompressedFiles(new LubanInterface() {
+        lubanUtils.getCompressedFiles(new LubanInterfaces() {
             @Override
             public void getFiles(List<File> files) {
 //                for (File file : files) {
@@ -176,7 +176,7 @@ public class ImageSelectActivity extends BaseActivity implements OnItemClickList
             files.add(imageItem.getFile());
         }
         if (selectedImages.size() > 0) {
-            lubanUtils.compressImage(this, files);
+            lubanUtils.compressImages(this, files);
         } else {
             Toast.makeText(this, "请先选择图片", Toast.LENGTH_SHORT).show();
         }

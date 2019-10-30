@@ -277,6 +277,7 @@ public class AndroidImagePicker {
     public List<ImageItem> getSelectedImages() {
         List<ImageItem> list = new ArrayList<>();
         list.addAll(mSelectedImages);
+//        list.addAll(currentSelectedImages);
         return list;
     }
 
