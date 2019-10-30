@@ -141,6 +141,7 @@ public class LubanUtils {
                     @Override
                     public void onSuccess(File file) {
                         lubanInterface.getFile(file);
+                        dismissProgress();
                     }
 
                     @Override
