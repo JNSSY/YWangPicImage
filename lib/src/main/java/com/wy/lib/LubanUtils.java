@@ -31,11 +31,6 @@ public class LubanUtils {
 
     public LubanUtils(Context context) {
         this.context = context;
-//        File file_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "hxx");
-//        if (!file_dir.exists()) {
-//            file_dir.mkdir();
-//        }
-
         if (pDialog == null) {
             pDialog = new ProgressDialog(context);
             pDialog.setCancelable(false);
@@ -158,13 +153,17 @@ public class LubanUtils {
         b64List.clear();
         for (File file : fileList) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] bytes = baos.toByteArray();
-            String string = android.util.Base64.encodeToString(bytes, android.util.Base64.DEFAULT);
-            string = string.replaceAll("\n", "");
-            string = string.replaceAll("\r", "");
-            b64List.add(string);
+            if (bitmap != null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] bytes = baos.toByteArray();
+                String string = android.util.Base64.encodeToString(bytes, android.util.Base64.DEFAULT);
+                string = string.replaceAll("\n", "");
+                string = string.replaceAll("\r", "");
+                b64List.add(string);
+            } else {
+                Toast.makeText(context, "图片异常", Toast.LENGTH_SHORT).show();
+            }
         }
         return b64List;
     }
