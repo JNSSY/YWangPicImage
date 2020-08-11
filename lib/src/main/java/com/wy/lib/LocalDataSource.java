@@ -81,18 +81,20 @@ public class LocalDataSource implements DataSource, LoaderManager.LoaderCallback
                 File imageFile = new File(imagePath);
                 File imageParentFile = imageFile.getParentFile();
 
-                ImageSet imageSet = new ImageSet();
-                imageSet.name = imageParentFile.getName();
-                imageSet.path = imageParentFile.getAbsolutePath();
-                imageSet.cover = item;
+                if (imageParentFile != null) {
+                    ImageSet imageSet = new ImageSet();
+                    imageSet.name = imageParentFile.getName();
+                    imageSet.path = imageParentFile.getAbsolutePath();
+                    imageSet.cover = item;
 
-                if (!mImageSetList.contains(imageSet)) {
-                    List<ImageItem> imageList = new ArrayList<>();
-                    imageList.add(item);
-                    imageSet.imageItems = imageList;
-                    mImageSetList.add(imageSet);
-                } else {
-                    mImageSetList.get(mImageSetList.indexOf(imageSet)).imageItems.add(item);
+                    if (!mImageSetList.contains(imageSet)) {
+                        List<ImageItem> imageList = new ArrayList<>();
+                        imageList.add(item);
+                        imageSet.imageItems = imageList;
+                        mImageSetList.add(imageSet);
+                    } else {
+                        mImageSetList.get(mImageSetList.indexOf(imageSet)).imageItems.add(item);
+                    }
                 }
 
             } while (data.moveToNext());
